@@ -54,6 +54,22 @@ type PhDThesis struct {
 	note    string
 }
 
+type InBook struct {
+	citekey   string
+	author    string
+	chapter   string
+	pages     string
+	publisher string
+	year      string
+	volume    string
+	series    string
+	typ       string
+	address   string
+	edition   string
+	month     string
+	note      string
+}
+
 //type Article struct {
 //	citekey string
 //	author  string
@@ -326,6 +342,94 @@ func AddPhdThesis() {
 		bibliography.WriteString("type = ")
 		bibliography.WriteString("{")
 		bibliography.WriteString(smf.typ)
+		bibliography.WriteString(CloseTag())
+	}
+	bibliography.WriteString("}\n")
+}
+
+func AddInBook() {
+	fmt.Println("####### Enter new InBOOK entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(Book)
+	//Gathers all the information//
+	smf.citekey = GenInfo("citekey")
+	smf.author = GenInfo("author")
+	smf.title = GenInfo("title")
+	smf.year = GenInfo("year")
+	smf.publisher = GenInfo("publisher")
+	smf.volume = GenInfo("volume")
+	smf.series = GenInfo("series")
+	smf.address = GenInfo("address")
+	smf.edition = GenInfo("edition")
+	smf.month = GenInfo("month")
+	smf.note = GenInfo("note")
+	// writes the information to file
+	bibliography.WriteString("\n@inbook{")
+	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(",\n")
+	if smf.author != "" {
+		bibliography.WriteString("author = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.author)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.title != "" {
+		bibliography.WriteString("title = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.title)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.year != "" {
+		bibliography.WriteString("year = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.year)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.publisher != "" {
+		bibliography.WriteString("publisher = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.publisher)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.volume != "" {
+		bibliography.WriteString("volume = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.volume)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.series != "" {
+		bibliography.WriteString("series = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.series)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.address != "" {
+		bibliography.WriteString("address = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.address)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.edition != "" {
+		bibliography.WriteString("edition = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.edition)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.month != "" {
+		bibliography.WriteString("month = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.month)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.note != "" {
+		bibliography.WriteString("note = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.note)
 		bibliography.WriteString(CloseTag())
 	}
 	bibliography.WriteString("}\n")
