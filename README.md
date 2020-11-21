@@ -13,6 +13,7 @@ Currently it offers the ability to:
 - add book entries
 - add article entries
 - add PhD theses
+- add inbook chapters
 
 The remaining classes will be added in the following weeks.
 

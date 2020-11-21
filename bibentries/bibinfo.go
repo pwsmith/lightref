@@ -57,6 +57,8 @@ type PhDThesis struct {
 type InBook struct {
 	citekey   string
 	author    string
+	title     string
+	editor    string
 	chapter   string
 	pages     string
 	publisher string
@@ -355,7 +357,7 @@ func AddInBook() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Book)
+	smf := new(InBook)
 	//Gathers all the information//
 	smf.citekey = GenInfo("citekey")
 	smf.author = GenInfo("author")
@@ -368,6 +370,7 @@ func AddInBook() {
 	smf.edition = GenInfo("edition")
 	smf.month = GenInfo("month")
 	smf.note = GenInfo("note")
+	smf.typ = GenInfo("type")
 	// writes the information to file
 	bibliography.WriteString("\n@inbook{")
 	bibliography.WriteString(smf.citekey)
@@ -388,6 +391,24 @@ func AddInBook() {
 		bibliography.WriteString("year = ")
 		bibliography.WriteString("{")
 		bibliography.WriteString(smf.year)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.pages != "" {
+		bibliography.WriteString("pages = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.pages)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.chapter != "" {
+		bibliography.WriteString("chapter = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.chapter)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.editor != "" {
+		bibliography.WriteString("editor = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.editor)
 		bibliography.WriteString(CloseTag())
 	}
 	if smf.publisher != "" {
@@ -432,5 +453,29 @@ func AddInBook() {
 		bibliography.WriteString(smf.note)
 		bibliography.WriteString(CloseTag())
 	}
+	if smf.typ != "" {
+		bibliography.WriteString("type = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.typ)
+		bibliography.WriteString(CloseTag())
+	}
 	bibliography.WriteString("}\n")
 }
+
+//type InBook struct {
+//	citekey   string
+//	author    string
+//	title     string
+//	editor    string
+//	chapter   string
+//	pages     string
+//	publisher string
+//	year      string
+//	volume    string
+//	series    string
+//	typ       string
+//	address   string
+//	edition   string
+//	month     string
+//	note      string
+//}
