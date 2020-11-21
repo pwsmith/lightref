@@ -9,23 +9,15 @@ import (
 	"strings"
 )
 
-func GetInfo2() string {
-
-	reader2 := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter extra: ")
-	info, _ := reader2.ReadString('\n')
-	info = strings.TrimSuffix(info, "\n")
-	return info
-}
-
-func Hi() {
-	fmt.Println("Hello world from embedded!")
-	fmt.Println("This I just added to bibinfo")
-}
-
-type Cliche struct {
-	firstWord  string
-	secondWord string
+type Article struct {
+	citekey string
+	author  string
+	pages   string
+	title   string
+	year    string
+	journal string
+	volume  string
+	number  string
 }
 
 type Unpublished struct {
@@ -50,6 +42,18 @@ type Book struct {
 	note      string
 }
 
+type PhDThesis struct {
+	citekey string
+	author  string
+	title   string
+	school  string
+	year    string
+	typ     string
+	address string
+	month   string
+	note    string
+}
+
 //type Article struct {
 //	citekey string
 //	author  string
@@ -69,12 +73,6 @@ func GenInfo(x string) string {
 	return info
 }
 
-//func Add_pages() string {
-//	fmt.Println("Enter pages: ")
-//	value := GetInfo()
-//	return value
-//}
-
 func Add_unpublished() {
 	fmt.Println("####### Enter new UNPUBLISHED entry #######")
 	smf := new(Unpublished)
@@ -92,43 +90,6 @@ func Add_unpublished() {
 	if _, err := file.WriteString("\n\n@unpublished{" + smf.citekey + ",\n" + "author = {" + smf.author + "},\n" + "note = {" + smf.note + "},\n" + "title = {" + smf.title + "},\n" + "year = {" + smf.year + "},\n}"); err != nil {
 		log.Fatal(err)
 	}
-}
-
-//func AddArticle() string {
-//	fmt.Println("####### Enter new ARTICLE entry #######")
-//	smf := new(Article)
-//	smf.citekey = GenInfo("citekey")
-//	smf.author = GenInfo("author")
-//	smf.title = GenInfo("title")
-//	smf.year = GenInfo("year")
-//	smf.journal = GenInfo("journal")
-//	smf.volume = GenInfo("volume")
-//	smf.number = GenInfo("number")
-//	smf.pages = GenInfo("pages")
-//
-//	//file, err := os.OpenFile("biblio.bib", os.O_APPEND|os.O_WRONLY, 0644)
-//	//if err != nil {
-//	//	log.Println(err)
-//	//}
-//	//defer file.Close()
-//	if smf.title != "" {
-//		fmt.Println("\n", smf.title, "printed as the if clause")
-//	} else {
-//		fmt.Println("Article title is null")
-//	}
-//	article_Entry := "\n\n@article{" + smf.citekey + ",\n" + "author = {" + smf.author + "},\n" + "title = {" + smf.title + "},\n" + "journal = {" + smf.journal + "},\n" + "pages = {" + smf.pages + "},\n" + "volume = {" + smf.volume + "},\n" + "number = {" + smf.number + "},\n" + "year = {" + smf.year + "},\n}"
-//	return article_Entry
-//}
-
-type Article struct {
-	citekey string
-	author  string
-	pages   string
-	title   string
-	year    string
-	journal string
-	volume  string
-	number  string
 }
 
 func OpenTag() string {
@@ -207,19 +168,6 @@ func AddArticle() {
 	}
 	bibliography.WriteString("}\n")
 }
-
-//type Book struct {
-//	author    string
-//	title     string
-//	publisher string
-//	year      string
-//	volume    string
-//	series    string
-//	address   string
-//	edition   string
-//	month     string
-//	note      string
-//}
 
 func AddBook() {
 	fmt.Println("####### Enter new BOOK entry #######")
@@ -304,6 +252,80 @@ func AddBook() {
 		bibliography.WriteString("note = ")
 		bibliography.WriteString("{")
 		bibliography.WriteString(smf.note)
+		bibliography.WriteString(CloseTag())
+	}
+	bibliography.WriteString("}\n")
+}
+
+func AddPhdThesis() {
+	fmt.Println("####### Enter new PhD THESIS entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(PhDThesis)
+	//Gathers all the information//
+	smf.citekey = GenInfo("citekey")
+	smf.author = GenInfo("author")
+	smf.title = GenInfo("title")
+	smf.school = GenInfo("school")
+	smf.year = GenInfo("year")
+	smf.address = GenInfo("address")
+	smf.month = GenInfo("month")
+	smf.note = GenInfo("note")
+	smf.typ = GenInfo("type")
+	// writes the information to file
+	bibliography.WriteString("\n@phdthesis{")
+	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(",\n")
+	if smf.author != "" {
+		bibliography.WriteString("author = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.author)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.title != "" {
+		bibliography.WriteString("title = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.title)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.year != "" {
+		bibliography.WriteString("year = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.year)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.school != "" {
+		bibliography.WriteString("school = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.school)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.address != "" {
+		bibliography.WriteString("address = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.address)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.month != "" {
+		bibliography.WriteString("month = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.month)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.note != "" {
+		bibliography.WriteString("note = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.note)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.typ != "" {
+		bibliography.WriteString("type = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.typ)
 		bibliography.WriteString(CloseTag())
 	}
 	bibliography.WriteString("}\n")

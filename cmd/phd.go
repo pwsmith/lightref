@@ -17,13 +17,14 @@ package cmd
 
 import (
 	"fmt"
+	bibinfo "lightref/bibentries"
+
 	"github.com/spf13/cobra"
-	"lightref/bibentries"
 )
 
-// messageCmd represents the message command
-var messageCmd = &cobra.Command{
-	Use:   "message",
+// phdCmd represents the phd command
+var phdCmd = &cobra.Command{
+	Use:   "phd",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -32,22 +33,21 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("message called")
-		fmt.Println("from within print")
-		bibinfo.Hi()
+		fmt.Println("phd called")
+		bibinfo.AddPhdThesis()
 	},
 }
 
 func init() {
-	printCmd.AddCommand(messageCmd)
+	addCmd.AddCommand(phdCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// messageCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// phdCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// messageCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// phdCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
