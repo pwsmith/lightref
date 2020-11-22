@@ -103,6 +103,61 @@ type InCollection struct {
 	note      string
 }
 
+type Bibentry struct {
+	citekey string
+}
+
+func Add_ArticleS() {
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+
+	smf := new(Article)
+
+	smf.citekey = GenInfo("citekey")
+	smf.author = GenInfo("author")
+	smf.title = GenInfo("title")
+	smf.year = GenInfo("year")
+	smf.journal = GenInfo("journal")
+	smf.volume = GenInfo("volume")
+	smf.number = GenInfo("number")
+	smf.pages = GenInfo("pages")
+
+	bibliography.WriteString("\n@article{")
+	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(",\n")
+	bibliography.WriteString(WriteData("citekey", smf.citekey))
+	if smf.author != "" {
+		bibliography.WriteString(WriteData("author", smf.author))
+	}
+	if smf.title != "" {
+		bibliography.WriteString(WriteData("title", smf.title))
+	}
+	if smf.year != "" {
+		bibliography.WriteString(WriteData("year", smf.year))
+	}
+	if smf.journal != "" {
+		bibliography.WriteString(WriteData("journal", smf.journal))
+	}
+	if smf.volume != "" {
+		bibliography.WriteString(WriteData("volume", smf.volume))
+	}
+	if smf.number != "" {
+		bibliography.WriteString(WriteData("number", smf.number))
+	}
+	if smf.pages != "" {
+		bibliography.WriteString(WriteData("pages", smf.pages))
+	}
+	bibliography.WriteString("}\n")
+}
+
+func WriteData(field string, a string) string {
+	printed_article := field + " = {" + a + "},\n"
+	return printed_article
+}
+
 func GenInfo(x string) string {
 	fmt.Println("Enter", x+strings.TrimSpace(":"))
 	reader2 := bufio.NewReader(os.Stdin)
