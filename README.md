@@ -12,18 +12,18 @@ Currently it offers the ability to:
 
 - [X] add article entries
 - [X] add book entries
-- [] add booklet entries
-- [] add conference entries
+- [ ] add booklet entries
+- [ ] add conference entries
 - [X] add inbook entries
-- [] add incollection entries
-- [] add inproceedings entries
-- [] add manual entries
-- [] add mastersthesis entries
-- [] add misc entries
+- [ ] add incollection entries
+- [ ] add inproceedings entries
+- [ ] add manual entries
+- [ ] add mastersthesis entries
+- [ ] add misc entries
 - [X] add phdthesis entries
-- [] add proceedings entries
-- [] add techreport entries
-- [] add unpublished entries
+- [ ] add proceedings entries
+- [ ] add techreport entries
+- [ ] add unpublished entries
 
 The remaining classes will be added in the following weeks.
 
