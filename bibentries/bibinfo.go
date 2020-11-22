@@ -72,19 +72,19 @@ type InBook struct {
 	note      string
 }
 
-//type Article struct {
-//	citekey string
-//	author  string
-//	pages   string
-//	title   string
-//	year    string
-//	journal string
-//	volume  string
-//	number  string
-//}
+type Booklet struct {
+	citekey      string
+	title        string
+	author       string
+	howpublished string
+	address      string
+	month        string
+	year         string
+	note         string
+}
 
 func GenInfo(x string) string {
-	fmt.Println("Enter", x, ":")
+	fmt.Println("Enter", x+strings.TrimSpace(":"))
 	reader2 := bufio.NewReader(os.Stdin)
 	info, _ := reader2.ReadString('\n')
 	info = strings.TrimSuffix(info, "\n")
@@ -462,20 +462,69 @@ func AddInBook() {
 	bibliography.WriteString("}\n")
 }
 
-//type InBook struct {
-//	citekey   string
-//	author    string
-//	title     string
-//	editor    string
-//	chapter   string
-//	pages     string
-//	publisher string
-//	year      string
-//	volume    string
-//	series    string
-//	typ       string
-//	address   string
-//	edition   string
-//	month     string
-//	note      string
-//}
+func AddBooklet() {
+	fmt.Println("####### Enter new BOOKLET entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(Booklet)
+	//Gathers all the information//
+	smf.citekey = GenInfo("citekey")
+	smf.author = GenInfo("author")
+	smf.title = GenInfo("title")
+	smf.year = GenInfo("year")
+	smf.howpublished = GenInfo("how published")
+	smf.address = GenInfo("address")
+	smf.month = GenInfo("month")
+	smf.note = GenInfo("note")
+	// writes the information to file
+	bibliography.WriteString("\n@booklet{")
+	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(",\n")
+	if smf.author != "" {
+		bibliography.WriteString("author = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.author)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.title != "" {
+		bibliography.WriteString("title = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.title)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.year != "" {
+		bibliography.WriteString("year = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.year)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.howpublished != "" {
+		bibliography.WriteString("howpublished = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.howpublished)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.address != "" {
+		bibliography.WriteString("address = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.address)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.month != "" {
+		bibliography.WriteString("month = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.month)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.note != "" {
+		bibliography.WriteString("note = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.note)
+		bibliography.WriteString(CloseTag())
+	}
+	bibliography.WriteString("}\n")
+}
