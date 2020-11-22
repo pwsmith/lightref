@@ -176,73 +176,6 @@ func CloseTag() string {
 	return closetag
 }
 
-func AddArticle() {
-	fmt.Println("####### Enter new ARTICLE entry #######")
-	//Open bibliography//
-	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-	}
-	defer bibliography.Close()
-	smf := new(Article)
-	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.journal = GenInfo("journal")
-	smf.volume = GenInfo("volume")
-	smf.number = GenInfo("number")
-	smf.pages = GenInfo("pages")
-	// writes the information to file
-	bibliography.WriteString("\n@article{")
-	bibliography.WriteString(smf.citekey)
-	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString("author = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.author)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.title != "" {
-		bibliography.WriteString("title = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.title)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.year != "" {
-		bibliography.WriteString("year = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.year)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.journal != "" {
-		bibliography.WriteString("journal = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.journal)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.volume != "" {
-		bibliography.WriteString("volume = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.volume)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.number != "" {
-		bibliography.WriteString("number = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.number)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.pages != "" {
-		bibliography.WriteString("pages = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.pages)
-		bibliography.WriteString(CloseTag())
-	}
-	bibliography.WriteString("}\n")
-}
-
 func AddBook() {
 	fmt.Println("####### Enter new BOOK entry #######")
 	//Open bibliography//
@@ -269,64 +202,34 @@ func AddBook() {
 	bibliography.WriteString(smf.citekey)
 	bibliography.WriteString(",\n")
 	if smf.author != "" {
-		bibliography.WriteString("author = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.author)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("author", smf.author))
 	}
 	if smf.title != "" {
-		bibliography.WriteString("title = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.title)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("title", smf.title))
 	}
 	if smf.year != "" {
-		bibliography.WriteString("year = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.year)
-		bibliography.WriteString(CloseTag())
-	}
-	if smf.publisher != "" {
-		bibliography.WriteString("publisher = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.publisher)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("year", smf.year))
 	}
 	if smf.volume != "" {
-		bibliography.WriteString("volume = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.volume)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("volume", smf.volume))
+	}
+	if smf.publisher != "" {
+		bibliography.WriteString(WriteData("publisher", smf.publisher))
 	}
 	if smf.series != "" {
-		bibliography.WriteString("series = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.series)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("series", smf.series))
 	}
 	if smf.address != "" {
-		bibliography.WriteString("address = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.address)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("address", smf.address))
 	}
 	if smf.edition != "" {
-		bibliography.WriteString("edition = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.edition)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("edition", smf.edition))
 	}
 	if smf.month != "" {
-		bibliography.WriteString("month = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.month)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("month", smf.month))
 	}
 	if smf.note != "" {
-		bibliography.WriteString("note = ")
-		bibliography.WriteString("{")
-		bibliography.WriteString(smf.note)
-		bibliography.WriteString(CloseTag())
+		bibliography.WriteString(WriteData("note", smf.note))
 	}
 	bibliography.WriteString("}\n")
 }
