@@ -10,10 +10,20 @@ However, for a simple task such as adding an entry to a bibtex file, opening a f
 Lightref is very much under development, and as such should not be considered a finished product.
 Currently it offers the ability to:
 
-- add book entries
-- add article entries
-- add PhD theses
-- add inbook chapters
+- [X] add article entries
+- [X] add book entries
+- [] add booklet entries
+- [] add conference entries
+- [X] add inbook entries
+- [] add incollection entries
+- [] add inproceedings entries
+- [] add manual entries
+- [] add mastersthesis entries
+- [] add misc entries
+- [X] add phdthesis entries
+- [] add proceedings entries
+- [] add techreport entries
+- [] add unpublished entries
 
 The remaining classes will be added in the following weeks.
 
