@@ -12,7 +12,7 @@ Currently it offers the ability to:
 
 - [X] add article entries
 - [X] add book entries
-- [ ] add booklet entries
+- [X] add booklet entries
 - [ ] add conference entries
 - [X] add inbook entries
 - [ ] add incollection entries
