@@ -26,6 +26,7 @@ type Unpublished struct {
 	note    string
 	title   string
 	year    string
+	month   string
 }
 
 type Book struct {
@@ -83,31 +84,31 @@ type Booklet struct {
 	note         string
 }
 
+type InCollection struct {
+	citekey   string
+	author    string
+	title     string
+	booktitle string
+	editor    string
+	chapter   string
+	pages     string
+	publisher string
+	year      string
+	volume    string
+	series    string
+	typ       string
+	address   string
+	edition   string
+	month     string
+	note      string
+}
+
 func GenInfo(x string) string {
 	fmt.Println("Enter", x+strings.TrimSpace(":"))
 	reader2 := bufio.NewReader(os.Stdin)
 	info, _ := reader2.ReadString('\n')
 	info = strings.TrimSuffix(info, "\n")
 	return info
-}
-
-func Add_unpublished() {
-	fmt.Println("####### Enter new UNPUBLISHED entry #######")
-	smf := new(Unpublished)
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("Author")
-	smf.note = GenInfo("note")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-
-	file, err := os.OpenFile("biblio.bib", os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-	}
-	defer file.Close()
-	if _, err := file.WriteString("\n\n@unpublished{" + smf.citekey + ",\n" + "author = {" + smf.author + "},\n" + "note = {" + smf.note + "},\n" + "title = {" + smf.title + "},\n" + "year = {" + smf.year + "},\n}"); err != nil {
-		log.Fatal(err)
-	}
 }
 
 func OpenTag() string {
@@ -524,6 +525,188 @@ func AddBooklet() {
 		bibliography.WriteString("note = ")
 		bibliography.WriteString("{")
 		bibliography.WriteString(smf.note)
+		bibliography.WriteString(CloseTag())
+	}
+	bibliography.WriteString("}\n")
+}
+
+func AddUnpublished() {
+	fmt.Println("####### Enter new UNPUBLISHED entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(Unpublished)
+	//Gathers all the information//
+	smf.citekey = GenInfo("citekey")
+	smf.author = GenInfo("author")
+	smf.title = GenInfo("title")
+	smf.year = GenInfo("year")
+	smf.month = GenInfo("month")
+	smf.note = GenInfo("note")
+	// writes the information to file
+	bibliography.WriteString("\n@unpublished{")
+	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(",\n")
+	if smf.author != "" {
+		bibliography.WriteString("author = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.author)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.title != "" {
+		bibliography.WriteString("title = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.title)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.year != "" {
+		bibliography.WriteString("year = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.year)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.month != "" {
+		bibliography.WriteString("month = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.month)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.note != "" {
+		bibliography.WriteString("note = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.note)
+		bibliography.WriteString(CloseTag())
+	}
+	bibliography.WriteString("}\n")
+}
+
+func AddInCollection() {
+	fmt.Println("####### Enter new InBOOK entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(InCollection)
+	//Gathers all the information//
+	smf.citekey = GenInfo("citekey")
+	smf.author = GenInfo("author")
+	smf.title = GenInfo("title")
+	smf.year = GenInfo("year")
+	smf.publisher = GenInfo("publisher")
+	smf.booktitle = GenInfo("book title")
+	smf.editor = GenInfo("editor")
+	smf.volume = GenInfo("volume")
+	smf.series = GenInfo("series")
+	smf.address = GenInfo("address")
+	smf.edition = GenInfo("edition")
+	smf.month = GenInfo("month")
+	smf.note = GenInfo("note")
+	smf.typ = GenInfo("type")
+	smf.chapter = GenInfo("chapter")
+	smf.pages = GenInfo("pages")
+	// writes the information to file
+	bibliography.WriteString("\n@incollection{")
+	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(",\n")
+	if smf.author != "" {
+		bibliography.WriteString("author = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.author)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.title != "" {
+		bibliography.WriteString("title = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.title)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.year != "" {
+		bibliography.WriteString("year = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.year)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.booktitle != "" {
+		bibliography.WriteString("booktitle = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.booktitle)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.editor != "" {
+		bibliography.WriteString("editor = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.editor)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.pages != "" {
+		bibliography.WriteString("pages = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.pages)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.chapter != "" {
+		bibliography.WriteString("chapter = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.chapter)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.editor != "" {
+		bibliography.WriteString("editor = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.editor)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.publisher != "" {
+		bibliography.WriteString("publisher = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.publisher)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.volume != "" {
+		bibliography.WriteString("volume = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.volume)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.series != "" {
+		bibliography.WriteString("series = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.series)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.address != "" {
+		bibliography.WriteString("address = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.address)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.edition != "" {
+		bibliography.WriteString("edition = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.edition)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.month != "" {
+		bibliography.WriteString("month = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.month)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.note != "" {
+		bibliography.WriteString("note = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.note)
+		bibliography.WriteString(CloseTag())
+	}
+	if smf.typ != "" {
+		bibliography.WriteString("type = ")
+		bibliography.WriteString("{")
+		bibliography.WriteString(smf.typ)
 		bibliography.WriteString(CloseTag())
 	}
 	bibliography.WriteString("}\n")
