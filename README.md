@@ -16,7 +16,7 @@ Currently it offers the ability to:
 - [ ] add conference entries
 - [X] add inbook entries
 - [X] add incollection entries
-- [ ] add inproceedings entries
+- [X] add inproceedings entries
 - [ ] add manual entries
 - [ ] add mastersthesis entries
 - [ ] add misc entries
