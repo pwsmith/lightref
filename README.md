@@ -17,8 +17,8 @@ Currently it offers the ability to:
 - [X] add inbook entries
 - [X] add incollection entries
 - [X] add inproceedings entries
-- [ ] add manual entries
-- [ ] add mastersthesis entries
+- [X] add manual entries
+- [X] add mastersthesis entries
 - [ ] add misc entries
 - [X] add phdthesis entries
 - [ ] add proceedings entries
@@ -56,3 +56,6 @@ Currently, Lightref supports adding entries to the bibliography through the foll
 - `lightref add article`
 - `lightref add book`
 - `lightref add phd`
+
+
+One can specify an alternative bibliography using the `--bibliography /path/to/biblio` or `-b /path/to/biblio` flag.
