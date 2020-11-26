@@ -17,24 +17,14 @@ package cmd
 
 import (
 	"fmt"
+	bibinfo "lightref/bibentries"
+
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	//	"github.com/spf13/viper"
-	//	"io/ioutil"
-	//	"log"
 )
 
-func Message() {
-	fmt.Println("Hello world")
-}
-
-func MessageDef() {
-	fmt.Println("This is the default message")
-}
-
-// addCmd represents the add command
-var addCmd = &cobra.Command{
-	Use:   "add",
+// manualCmd represents the manual command
+var manualCmd = &cobra.Command{
+	Use:   "manual",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -43,46 +33,21 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
-		fmt.Println("####### This is the landing page for add #######")
-		//	var bibliography string = viper.GetString("bibliography")
-		//	fmt.Println(bibliography)
-		//	data, err := ioutil.ReadFile(bibliography)
-		//	if err != nil {
-		//		log.Fatal(err)
-		//	}
-		//	fmt.Println(string(data))
-
-		tstatus, _ := cmd.Flags().GetBool("toggle")
-		if tstatus {
-			Message()
-		} else {
-			MessageDef()
-		}
-		fmt.Println(cmd.Flags().GetString("bibliography"))
-		bib, _ := cmd.Flags().GetString("bibliography")
-		if bib != "" {
-			fmt.Println("Bibliography =", bib)
-			viper.Set("bibliography", bib)
-		}
-		fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
+		fmt.Println("manual called")
+		bibinfo.AddManual()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd)
+	addCmd.AddCommand(manualCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	var Bib string
-	addCmd.PersistentFlags().StringVarP(&Bib, "bibliography", "b", "", "specify an alternate bibliography")
-	fmt.Println("Bib =", Bib)
+	// manualCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// manualCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

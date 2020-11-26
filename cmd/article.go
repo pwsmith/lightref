@@ -17,9 +17,9 @@ package cmd
 
 import (
 	"fmt"
-	"lightref/bibentries"
-
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	bibinfo "lightref/bibentries"
 )
 
 // articleCmd represents the article command
@@ -34,8 +34,13 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("article called")
+		bib, _ := addCmd.Flags().GetString("bibliography")
+		if bib != "" {
+			fmt.Println("Bibliography =", bib)
+			viper.Set("bibliography", bib)
+		}
+		fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
 		bibinfo.Add_ArticleS()
-
 	},
 }
 

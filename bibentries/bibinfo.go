@@ -9,164 +9,55 @@ import (
 	"strings"
 )
 
-type Article struct {
-	citekey string
-	author  string
-	pages   string
-	title   string
-	year    string
-	journal string
-	volume  string
-	number  string
-}
-
-type Unpublished struct {
-	citekey string
-	author  string
-	note    string
-	title   string
-	year    string
-	month   string
-}
-
-type Book struct {
-	citekey   string
-	author    string
-	title     string
-	publisher string
-	year      string
-	volume    string
-	series    string
-	address   string
-	edition   string
-	month     string
-	note      string
-}
-
-type PhDThesis struct {
-	citekey string
-	author  string
-	title   string
-	school  string
-	year    string
-	typ     string
-	address string
-	month   string
-	note    string
-}
-
-type InBook struct {
-	citekey   string
-	author    string
-	title     string
-	editor    string
-	chapter   string
-	pages     string
-	publisher string
-	year      string
-	volume    string
-	series    string
-	typ       string
-	address   string
-	edition   string
-	month     string
-	note      string
-}
-
-type Booklet struct {
-	citekey      string
-	title        string
-	author       string
-	howpublished string
-	address      string
-	month        string
-	year         string
-	note         string
-}
-
-type InCollection struct {
-	citekey   string
-	author    string
-	title     string
-	booktitle string
-	editor    string
-	chapter   string
-	pages     string
-	publisher string
-	year      string
-	volume    string
-	series    string
-	typ       string
-	address   string
-	edition   string
-	month     string
-	note      string
-}
-
-type InProceedings struct {
-	citekey      string
-	author       string
-	title        string
-	booktitle    string
-	year         string
-	editor       string
-	volume       string
-	series       string
-	pages        string
-	address      string
-	month        string
-	organization string
-	publisher    string
-	note         string
-	typ          string
-}
-
-type Bibentry struct {
-	citekey string
-}
-
+//func GetBiblio() {
+//	bib, _ := addCmd.Flags().GetString("bibliography")
+//	if bib != "" {
+//		fmt.Println("Bibliography =", bib)
+//		viper.Set("bibliography", bib)
+//	}
+//	fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
+//}
 func Add_ArticleS() {
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
 	}
-	defer bibliography.Close()
 
 	smf := new(Article)
 
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.journal = GenInfo("journal")
-	smf.volume = GenInfo("volume")
-	smf.number = GenInfo("number")
-	smf.pages = GenInfo("pages")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Journal = GenInfo("journal")
+	smf.Volume = GenInfo("volume")
+	smf.Number = GenInfo("number")
+	smf.Pages = GenInfo("pages")
 
 	bibliography.WriteString("\n@article{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	bibliography.WriteString(WriteData("citekey", smf.citekey))
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	bibliography.WriteString(WriteData("citekey", smf.Citekey))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("year", smf.Year))
 	}
-	if smf.journal != "" {
-		bibliography.WriteString(WriteData("journal", smf.journal))
+	if smf.Journal != "" {
+		bibliography.WriteString(WriteData("journal", smf.Journal))
 	}
-	if smf.volume != "" {
-		bibliography.WriteString(WriteData("volume", smf.volume))
+	if smf.Volume != "" {
+		bibliography.WriteString(WriteData("volume", smf.Volume))
 	}
-	if smf.number != "" {
-		bibliography.WriteString(WriteData("number", smf.number))
+	if smf.Number != "" {
+		bibliography.WriteString(WriteData("number", smf.Number))
 	}
-	if smf.pages != "" {
-		bibliography.WriteString(WriteData("pages", smf.pages))
+	if smf.Pages != "" {
+		bibliography.WriteString(WriteData("pages", smf.Pages))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -197,6 +88,7 @@ func CloseTag() string {
 func AddBook() {
 	fmt.Println("####### Enter new BOOK entry #######")
 	//Open bibliography//
+	viper.Set("bibliography", "/home/pwsmith/otherbib.bib")
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -204,50 +96,50 @@ func AddBook() {
 	defer bibliography.Close()
 	smf := new(Book)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.publisher = GenInfo("publisher")
-	smf.volume = GenInfo("volume")
-	smf.series = GenInfo("series")
-	smf.address = GenInfo("address")
-	smf.edition = GenInfo("edition")
-	smf.month = GenInfo("month")
-	smf.note = GenInfo("note")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Publisher = GenInfo("publisher")
+	smf.Volume = GenInfo("volume")
+	smf.Series = GenInfo("series")
+	smf.Address = GenInfo("address")
+	smf.Edition = GenInfo("edition")
+	smf.Month = GenInfo("month")
+	smf.Note = GenInfo("note")
 	// writes the information to file
 	bibliography.WriteString("\n@book{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
-	if smf.volume != "" {
-		bibliography.WriteString(WriteData("volume", smf.volume))
+	if smf.Volume != "" {
+		bibliography.WriteString(WriteData("Volume", smf.Volume))
 	}
-	if smf.publisher != "" {
-		bibliography.WriteString(WriteData("publisher", smf.publisher))
+	if smf.Publisher != "" {
+		bibliography.WriteString(WriteData("Publisher", smf.Publisher))
 	}
-	if smf.series != "" {
-		bibliography.WriteString(WriteData("series", smf.series))
+	if smf.Series != "" {
+		bibliography.WriteString(WriteData("Series", smf.Series))
 	}
-	if smf.address != "" {
-		bibliography.WriteString(WriteData("address", smf.address))
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
-	if smf.edition != "" {
-		bibliography.WriteString(WriteData("edition", smf.edition))
+	if smf.Edition != "" {
+		bibliography.WriteString(WriteData("Edition", smf.Edition))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -262,42 +154,42 @@ func AddPhdThesis() {
 	defer bibliography.Close()
 	smf := new(PhDThesis)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.school = GenInfo("school")
-	smf.year = GenInfo("year")
-	smf.address = GenInfo("address")
-	smf.month = GenInfo("month")
-	smf.note = GenInfo("note")
-	smf.typ = GenInfo("type")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.School = GenInfo("school")
+	smf.Year = GenInfo("year")
+	smf.Address = GenInfo("address")
+	smf.Month = GenInfo("month")
+	smf.Note = GenInfo("note")
+	smf.Typ = GenInfo("type")
 	// writes the information to file
 	bibliography.WriteString("\n@phdthesis{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
-	if smf.school != "" {
-		bibliography.WriteString(WriteData("school", smf.school))
+	if smf.School != "" {
+		bibliography.WriteString(WriteData("School", smf.School))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
-	if smf.address != "" {
-		bibliography.WriteString(WriteData("address", smf.address))
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
-	if smf.typ != "" {
-		bibliography.WriteString(WriteData("type", smf.typ))
+	if smf.Typ != "" {
+		bibliography.WriteString(WriteData("Type", smf.Typ))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -312,54 +204,54 @@ func AddInBook() {
 	defer bibliography.Close()
 	smf := new(InBook)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.publisher = GenInfo("publisher")
-	smf.volume = GenInfo("volume")
-	smf.series = GenInfo("series")
-	smf.address = GenInfo("address")
-	smf.edition = GenInfo("edition")
-	smf.month = GenInfo("month")
-	smf.note = GenInfo("note")
-	smf.typ = GenInfo("type")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Publisher = GenInfo("publisher")
+	smf.Volume = GenInfo("volume")
+	smf.Series = GenInfo("series")
+	smf.Address = GenInfo("address")
+	smf.Edition = GenInfo("edition")
+	smf.Month = GenInfo("month")
+	smf.Note = GenInfo("note")
+	smf.Typ = GenInfo("type")
 	// writes the information to file
 	bibliography.WriteString("\n@inbook{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
-	if smf.publisher != "" {
-		bibliography.WriteString(WriteData("publisher", smf.publisher))
+	if smf.Publisher != "" {
+		bibliography.WriteString(WriteData("Publisher", smf.Publisher))
 	}
-	if smf.volume != "" {
-		bibliography.WriteString(WriteData("volume", smf.volume))
+	if smf.Volume != "" {
+		bibliography.WriteString(WriteData("Volume", smf.Volume))
 	}
-	if smf.series != "" {
-		bibliography.WriteString(WriteData("series", smf.series))
+	if smf.Series != "" {
+		bibliography.WriteString(WriteData("Series", smf.Series))
 	}
-	if smf.address != "" {
-		bibliography.WriteString(WriteData("address", smf.address))
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
-	if smf.edition != "" {
-		bibliography.WriteString(WriteData("edition", smf.edition))
+	if smf.Edition != "" {
+		bibliography.WriteString(WriteData("Edition", smf.Edition))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
-	if smf.typ != "" {
-		bibliography.WriteString(WriteData("type", smf.typ))
+	if smf.Typ != "" {
+		bibliography.WriteString(WriteData("Type", smf.Typ))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -374,38 +266,38 @@ func AddBooklet() {
 	defer bibliography.Close()
 	smf := new(Booklet)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.howpublished = GenInfo("how published")
-	smf.address = GenInfo("address")
-	smf.month = GenInfo("month")
-	smf.note = GenInfo("note")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Howpublished = GenInfo("how published")
+	smf.Address = GenInfo("address")
+	smf.Month = GenInfo("month")
+	smf.Note = GenInfo("note")
 	// writes the information to file
 	bibliography.WriteString("\n@booklet{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
-	if smf.howpublished != "" {
-		bibliography.WriteString(WriteData("howpublished", smf.howpublished))
+	if smf.Howpublished != "" {
+		bibliography.WriteString(WriteData("Howpublished", smf.Howpublished))
 	}
-	if smf.address != "" {
-		bibliography.WriteString(WriteData("address", smf.address))
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -420,30 +312,30 @@ func AddUnpublished() {
 	defer bibliography.Close()
 	smf := new(Unpublished)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.month = GenInfo("month")
-	smf.note = GenInfo("note")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Month = GenInfo("month")
+	smf.Note = GenInfo("note")
 	// writes the information to file
 	bibliography.WriteString("\n@unpublished{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("year", smf.Year))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("month", smf.Month))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("note", smf.Note))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -458,70 +350,70 @@ func AddInCollection() {
 	defer bibliography.Close()
 	smf := new(InCollection)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.publisher = GenInfo("publisher")
-	smf.booktitle = GenInfo("book title")
-	smf.editor = GenInfo("editor")
-	smf.volume = GenInfo("volume")
-	smf.series = GenInfo("series")
-	smf.address = GenInfo("address")
-	smf.edition = GenInfo("edition")
-	smf.month = GenInfo("month")
-	smf.note = GenInfo("note")
-	smf.typ = GenInfo("type")
-	smf.chapter = GenInfo("chapter")
-	smf.pages = GenInfo("pages")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Publisher = GenInfo("publisher")
+	smf.Booktitle = GenInfo("book title")
+	smf.Editor = GenInfo("editor")
+	smf.Volume = GenInfo("volume")
+	smf.Series = GenInfo("series")
+	smf.Address = GenInfo("address")
+	smf.Edition = GenInfo("edition")
+	smf.Month = GenInfo("month")
+	smf.Note = GenInfo("note")
+	smf.Typ = GenInfo("type")
+	smf.Chapter = GenInfo("chapter")
+	smf.Pages = GenInfo("pages")
 	// writes the information to file
 	bibliography.WriteString("\n@incollection{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
-	if smf.booktitle != "" {
-		bibliography.WriteString(WriteData("booktitle", smf.booktitle))
+	if smf.Booktitle != "" {
+		bibliography.WriteString(WriteData("Booktitle", smf.Booktitle))
 	}
-	if smf.publisher != "" {
-		bibliography.WriteString(WriteData("publisher", smf.publisher))
+	if smf.Publisher != "" {
+		bibliography.WriteString(WriteData("Publisher", smf.Publisher))
 	}
-	if smf.editor != "" {
-		bibliography.WriteString(WriteData("editor", smf.editor))
+	if smf.Editor != "" {
+		bibliography.WriteString(WriteData("Editor", smf.Editor))
 	}
-	if smf.volume != "" {
-		bibliography.WriteString(WriteData("volume", smf.volume))
+	if smf.Volume != "" {
+		bibliography.WriteString(WriteData("Volume", smf.Volume))
 	}
-	if smf.series != "" {
-		bibliography.WriteString(WriteData("series", smf.series))
+	if smf.Series != "" {
+		bibliography.WriteString(WriteData("Series", smf.Series))
 	}
-	if smf.address != "" {
-		bibliography.WriteString(WriteData("address", smf.address))
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
-	if smf.edition != "" {
-		bibliography.WriteString(WriteData("edition", smf.edition))
+	if smf.Edition != "" {
+		bibliography.WriteString(WriteData("Edition", smf.Edition))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
-	if smf.typ != "" {
-		bibliography.WriteString(WriteData("type", smf.typ))
+	if smf.Typ != "" {
+		bibliography.WriteString(WriteData("Type", smf.Typ))
 	}
-	if smf.chapter != "" {
-		bibliography.WriteString(WriteData("chapter", smf.chapter))
+	if smf.Chapter != "" {
+		bibliography.WriteString(WriteData("Chapter", smf.Chapter))
 	}
-	if smf.pages != "" {
-		bibliography.WriteString(WriteData("pages", smf.pages))
+	if smf.Pages != "" {
+		bibliography.WriteString(WriteData("Pages", smf.Pages))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -536,65 +428,162 @@ func AddInProceedings() {
 	defer bibliography.Close()
 	smf := new(InProceedings)
 	//Gathers all the information//
-	smf.citekey = GenInfo("citekey")
-	smf.author = GenInfo("author")
-	smf.title = GenInfo("title")
-	smf.year = GenInfo("year")
-	smf.publisher = GenInfo("publisher")
-	smf.booktitle = GenInfo("book title")
-	smf.editor = GenInfo("editor")
-	smf.volume = GenInfo("volume")
-	smf.series = GenInfo("series")
-	smf.address = GenInfo("address")
-	smf.month = GenInfo("month")
-	smf.organization = GenInfo("Organization")
-	smf.note = GenInfo("note")
-	smf.typ = GenInfo("type")
-	smf.pages = GenInfo("pages")
+	smf.Citekey = GenInfo("citekey")
+	smf.Author = GenInfo("author")
+	smf.Title = GenInfo("title")
+	smf.Year = GenInfo("year")
+	smf.Publisher = GenInfo("publisher")
+	smf.Booktitle = GenInfo("book title")
+	smf.Editor = GenInfo("editor")
+	smf.Volume = GenInfo("volume")
+	smf.Series = GenInfo("series")
+	smf.Address = GenInfo("address")
+	smf.Month = GenInfo("month")
+	smf.Organization = GenInfo("Organization")
+	smf.Note = GenInfo("note")
+	smf.Typ = GenInfo("type")
+	smf.Pages = GenInfo("pages")
 	// writes the information to file
 	bibliography.WriteString("\n@inproceedings{")
-	bibliography.WriteString(smf.citekey)
+	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	if smf.author != "" {
-		bibliography.WriteString(WriteData("author", smf.author))
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
-	if smf.title != "" {
-		bibliography.WriteString(WriteData("title", smf.title))
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
-	if smf.year != "" {
-		bibliography.WriteString(WriteData("year", smf.year))
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
-	if smf.publisher != "" {
-		bibliography.WriteString(WriteData("publisher", smf.publisher))
+	if smf.Publisher != "" {
+		bibliography.WriteString(WriteData("Publisher", smf.Publisher))
 	}
-	if smf.booktitle != "" {
-		bibliography.WriteString(WriteData("booktitle", smf.booktitle))
+	if smf.Booktitle != "" {
+		bibliography.WriteString(WriteData("Booktitle", smf.Booktitle))
 	}
-	if smf.editor != "" {
-		bibliography.WriteString(WriteData("editor", smf.editor))
+	if smf.Editor != "" {
+		bibliography.WriteString(WriteData("Editor", smf.Editor))
 	}
-	if smf.volume != "" {
-		bibliography.WriteString(WriteData("volume", smf.volume))
+	if smf.Volume != "" {
+		bibliography.WriteString(WriteData("Volume", smf.Volume))
 	}
-	if smf.series != "" {
-		bibliography.WriteString(WriteData("series", smf.series))
+	if smf.Series != "" {
+		bibliography.WriteString(WriteData("Series", smf.Series))
 	}
-	if smf.address != "" {
-		bibliography.WriteString(WriteData("address", smf.address))
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
-	if smf.month != "" {
-		bibliography.WriteString(WriteData("month", smf.month))
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
-	if smf.organization != "" {
-		bibliography.WriteString(WriteData("organization", smf.organization))
+	if smf.Organization != "" {
+		bibliography.WriteString(WriteData("Organization", smf.Organization))
 	}
-	if smf.note != "" {
-		bibliography.WriteString(WriteData("note", smf.note))
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
-	if smf.pages != "" {
-		bibliography.WriteString(WriteData("pages", smf.pages))
+	if smf.Pages != "" {
+		bibliography.WriteString(WriteData("Pages", smf.Pages))
 	}
-	if smf.typ != "" {
-		bibliography.WriteString(WriteData("type", smf.typ))
+	if smf.Typ != "" {
+		bibliography.WriteString(WriteData("Type", smf.Typ))
 	}
+	bibliography.WriteString("}\n")
+}
+
+func AddManual() {
+	fmt.Println("####### Enter new MANUAL entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(Manual)
+	smf.Citekey = GenInfo("Citekey")
+	smf.Title = GenInfo("Title")
+	smf.Author = GenInfo("Author")
+	smf.Organization = GenInfo("Organization")
+	smf.Address = GenInfo("Address")
+	smf.Edition = GenInfo("Edition")
+	smf.Month = GenInfo("Month")
+	smf.Year = GenInfo("Year")
+	smf.Note = GenInfo("Note")
+	// writes the information to file
+	bibliography.WriteString("\n@manual{")
+	bibliography.WriteString(smf.Citekey)
+	bibliography.WriteString(",\n")
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
+	}
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
+	}
+	if smf.Organization != "" {
+		bibliography.WriteString(WriteData("Organization", smf.Organization))
+	}
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
+	}
+	if smf.Edition != "" {
+		bibliography.WriteString(WriteData("Edition", smf.Edition))
+	}
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
+	}
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
+	}
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
+	}
+	bibliography.WriteString("}\n")
+}
+func AddMAThesis() {
+	fmt.Println("####### Enter new MA THESIS entry #######")
+	//Open bibliography//
+	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer bibliography.Close()
+	smf := new(Mathesis)
+	smf.Author = GenInfo("Author")
+	smf.Title = GenInfo("Title")
+	smf.School = GenInfo("School")
+	smf.Year = GenInfo("Year")
+	smf.Typ = GenInfo("Type")
+	smf.Address = GenInfo("Address")
+	smf.Month = GenInfo("Month")
+	smf.Note = GenInfo("Note")
+	// writes the information to file
+	bibliography.WriteString("\n@manual{")
+	bibliography.WriteString(smf.Citekey)
+	bibliography.WriteString(",\n")
+	if smf.Author != "" {
+		bibliography.WriteString(WriteData("Author", smf.Author))
+	}
+	if smf.Title != "" {
+		bibliography.WriteString(WriteData("Title", smf.Title))
+	}
+	if smf.School != "" {
+		bibliography.WriteString(WriteData("School", smf.School))
+	}
+	if smf.Year != "" {
+		bibliography.WriteString(WriteData("Year", smf.Year))
+	}
+	if smf.Typ != "" {
+		bibliography.WriteString(WriteData("Type", smf.Typ))
+	}
+	if smf.Address != "" {
+		bibliography.WriteString(WriteData("Address", smf.Address))
+	}
+	if smf.Month != "" {
+		bibliography.WriteString(WriteData("Month", smf.Month))
+	}
+	if smf.Note != "" {
+		bibliography.WriteString(WriteData("Note", smf.Note))
+	}
+	bibliography.WriteString("}\n")
 }
