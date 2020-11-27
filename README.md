@@ -19,10 +19,10 @@ Currently it offers the ability to:
 - [X] add inproceedings entries
 - [X] add manual entries
 - [X] add mastersthesis entries
-- [ ] add misc entries
+- [X] add misc entries
 - [X] add phdthesis entries
-- [ ] add proceedings entries
-- [ ] add techreport entries
+- [X] add proceedings entries
+- [X] add techreport entries
 - [X] add unpublished entries
 
 The remaining classes will be added in the following weeks.
