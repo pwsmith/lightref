@@ -27,11 +27,9 @@ Currently it offers the ability to:
 
 The remaining classes will be added in the following weeks.
 
-# Features to be added 
+- [X] Provide functionality to print the bibliography in shortened form to output
+- [] Allow for a long listing of the bibliography
 
-- search bibliography and display results to terminal
-- citekey checking to avoid duplication: currently there exists nothing to stop you using duplicate citekeys in your bibliography, which is not ideal
-- remove entries from bibliography
 
 # Installation
 
@@ -40,7 +38,8 @@ Since it is still under development there is currently no binary for download.
 This will be made available when ready.
 
 It is possible to build from source.
-In which case, you should install Cobra following instructions [here](https://github.com/spf13/cobra#installing).
+You must have [Go](https://golang.org), installed following the instructions [here](https://golang.org/dl/).
+You should then install Cobra following instructions [here](https://github.com/spf13/cobra#installing).
 Then, fork the Lightref repo and run:
 
 ```
@@ -51,11 +50,51 @@ $ go install lightref
 
 # Instructions
 
-Currently, Lightref supports adding entries to the bibliography through the following commands:
+## Main Commands
 
-- `lightref add article`
-- `lightref add book`
-- `lightref add phd`
+### Add
+
+```bash
+lightref add ENTRY_TYPE
+```
+
+To add an entry to the bibliography, use the `add` command followed by the relevant bibtex entry type.
+For instance:
+
+```bash
+lightref add article ## to add an article
+lightref add inbook ## to add a book chapter
+```
+
+You will then be prompted to add in the information for the fields that are relevant for that type.
+For example, if you run `lightref add article`, you will be prompted for:
+
+- citekey
+- author
+- title
+- year
+- journal
+- volume
+- number
+- pages
+
+Lightref does **not** enforce the filling out of any fields, so any of them can be left blank if you wish.
+Bibtex does have a concept of obligatory fields that should be filled out for each type, however, and will warn the user at run time if they are not entered.
+
+### Print
+
+```bash
+lightref print
+```
+
+Provides a short summary of each entry in the file, containing the (highlighted) citekey, the Author and the Title.
 
 
-One can specify an alternative bibliography using the `--bibliography /path/to/biblio` or `-b /path/to/biblio` flag.
+## Global Flags
+
+`-b /path/to/biblio` | `--bibliography /path/to/biblio`: allows the user to specify an alternative bibliography to the default in the `lightref.yaml` file.
+
+# Features to be added 
+
+- search bibliography and display results to terminal
+- citekey checking to avoid duplication: currently there exists nothing to stop you using duplicate citekeys in your bibliography, which is not ideal

@@ -37,27 +37,26 @@ func Add_ArticleS() {
 	bibliography.WriteString("\n@article{")
 	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
-	bibliography.WriteString(WriteData("citekey", smf.Citekey))
 	if smf.Author != "" {
-		bibliography.WriteString(WriteData("author", smf.Author))
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
 	if smf.Title != "" {
-		bibliography.WriteString(WriteData("title", smf.Title))
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
 	if smf.Year != "" {
-		bibliography.WriteString(WriteData("year", smf.Year))
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
 	if smf.Journal != "" {
-		bibliography.WriteString(WriteData("journal", smf.Journal))
+		bibliography.WriteString(WriteData("Journal", smf.Journal))
 	}
 	if smf.Volume != "" {
-		bibliography.WriteString(WriteData("volume", smf.Volume))
+		bibliography.WriteString(WriteData("Volume", smf.Volume))
 	}
 	if smf.Number != "" {
-		bibliography.WriteString(WriteData("number", smf.Number))
+		bibliography.WriteString(WriteData("Number", smf.Number))
 	}
 	if smf.Pages != "" {
-		bibliography.WriteString(WriteData("pages", smf.Pages))
+		bibliography.WriteString(WriteData("Pages", smf.Pages))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -88,7 +87,6 @@ func CloseTag() string {
 func AddBook() {
 	fmt.Println("####### Enter new BOOK entry #######")
 	//Open bibliography//
-	viper.Set("bibliography", "/home/pwsmith/otherbib.bib")
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -323,19 +321,19 @@ func AddUnpublished() {
 	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
 	if smf.Author != "" {
-		bibliography.WriteString(WriteData("author", smf.Author))
+		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
 	if smf.Title != "" {
-		bibliography.WriteString(WriteData("title", smf.Title))
+		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
 	if smf.Year != "" {
-		bibliography.WriteString(WriteData("year", smf.Year))
+		bibliography.WriteString(WriteData("Year", smf.Year))
 	}
 	if smf.Month != "" {
-		bibliography.WriteString(WriteData("month", smf.Month))
+		bibliography.WriteString(WriteData("Month", smf.Month))
 	}
 	if smf.Note != "" {
-		bibliography.WriteString(WriteData("note", smf.Note))
+		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
 	bibliography.WriteString("}\n")
 }
@@ -737,4 +735,22 @@ func AddTechReport() {
 		bibliography.WriteString(WriteData("Note", smf.Note))
 	}
 	bibliography.WriteString("}\n")
+}
+
+func RemoveType(x string) string {
+	var Removed string
+	if strings.Contains(x, "@article") {
+		Removed = strings.Replace(x, "@article", "Citekey = ", -1)
+	} else if strings.Contains(x, "@book") {
+		Removed = strings.Replace(x, "@book", "Citekey = ", -1)
+	} else if strings.Contains(x, "@phdthesis") {
+		Removed = strings.Replace(x, "@phdthesis", "Citekey = ", -1)
+	} else if strings.Contains(x, "@misc") {
+		Removed = strings.Replace(x, "@misc", "Citekey = ", -1)
+	} else if strings.Contains(x, "@unpublished") {
+		Removed = strings.Replace(x, "@unpublished", "Citekey = ", -1)
+	} else {
+		Removed = x
+	}
+	return Removed
 }

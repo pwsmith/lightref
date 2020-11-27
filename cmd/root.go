@@ -56,6 +56,10 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
+	var Bib string
+	rootCmd.PersistentFlags().StringVarP(&Bib, "bibliography", "b", "", "specify an alternate bibliography")
+	fmt.Println("Bib =", Bib)
+
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.lightref)")
 	//	rootCmd.PersistentFlags().BoolP("bibliography", "b", false, "Specify a different bibiography from the default")
 	// Cobra also supports local flags, which will only run
@@ -91,7 +95,7 @@ func initConfig() {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 		message := viper.Get("message")
 		fmt.Println(message)
-		bib, _ := addCmd.Flags().GetString("bibliography")
+		bib, _ := rootCmd.Flags().GetString("bibliography")
 		if bib != "" {
 			fmt.Println("Bibliography =", bib)
 			viper.Set("bibliography", bib)

@@ -78,10 +78,6 @@ func init() {
 	// and all subcommands, e.g.:
 	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	var Bib string
-	addCmd.PersistentFlags().StringVarP(&Bib, "bibliography", "b", "", "specify an alternate bibliography")
-	fmt.Println("Bib =", Bib)
-
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")

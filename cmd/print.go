@@ -18,9 +18,14 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/spf13/cobra"
+	bibinfo "lightref/bibentries"
+	"log"
 	"os"
 	"strings"
+
+	"github.com/fatih/color"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // printCmd represents the print command
@@ -35,12 +40,35 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("print called")
-		fmt.Println("And here is something I added.")
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Println("Enter a word: ")
-		entry, _ := reader.ReadString('\n')
-		entry = strings.TrimSuffix(entry, "\n")
-		fmt.Println(entry)
+		readFile, err := os.Open(viper.GetString("bibliography"))
+		if err != nil {
+			log.Fatalf("failed to open file: %s", err)
+		}
+
+		d := color.New(color.FgGreen, color.Bold)
+		fileScanner := bufio.NewScanner(readFile)
+		fileScanner.Split(bufio.ScanLines)
+		var fileTextLines []string
+
+		for fileScanner.Scan() {
+			fileTextLines = append(fileTextLines, fileScanner.Text())
+		}
+
+		readFile.Close()
+
+		for _, eachline := range fileTextLines {
+			if strings.Contains(eachline, "Title") || strings.Contains(eachline, "Year") || strings.Contains(eachline, "Author") || strings.Contains(eachline, "@") {
+				//eachline = strings.Replace(eachline, "@article", "citekey = ", -1)
+				eachline = bibinfo.RemoveType(eachline)
+				eachline = strings.Replace(eachline, "{", "", -1)
+				eachline = strings.Replace(eachline, "}", "", -1)
+				if strings.Contains(eachline, "Citekey") {
+					d.Printf("\n" + eachline + "\n")
+				} else {
+					fmt.Println(eachline)
+				}
+			}
+		}
 	},
 }
 
