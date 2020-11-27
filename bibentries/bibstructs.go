@@ -140,6 +140,42 @@ type Mathesis struct {
 	Note    string
 }
 
+type Misc struct {
+	Citekey      string
+	Author       string
+	Title        string
+	Howpublished string
+	Month        string
+	Year         string
+	Note         string
+}
+
+type Proceedings struct {
+	Citekey      string
+	Title        string
+	Year         string
+	Editor       string
+	Volume       string
+	Address      string
+	Month        string
+	Organization string
+	Publisher    string
+	Note         string
+}
+
+type Techreport struct {
+	Citekey     string
+	Author      string
+	Title       string
+	Institution string
+	Year        string
+	Typ         string
+	Number      string
+	Address     string
+	Month       string
+	Note        string
+}
+
 type Bibentry struct {
 	citekey string
 }
