@@ -28,7 +28,7 @@ Currently it offers the ability to:
 The remaining classes will be added in the following weeks.
 
 - [X] Provide functionality to print the bibliography in shortened form to output
-- [] Allow for a long listing of the bibliography
+- [ ] Allow for a long listing of the bibliography
 
 
 # Installation
@@ -49,6 +49,17 @@ $ go install lightref
 ```
 
 # Instructions
+
+## Configuration
+
+A default bibliography can be set in the file `~/.lightref.yaml` on Unix systems.
+The only relevant field at this point is the bibliography value, which you should set with the absolute path:
+
+```yaml
+bibliography: "/path/to/bibliography/file/on/system"
+```
+
+Note that this is optional, and the bibliography can be set at the command using the `-b`/`--bibliography` flag as detailed below.
 
 ## Main Commands
 
