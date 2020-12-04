@@ -1,5 +1,5 @@
 /*
-Copyright © 2020 NAME HERE <EMAIL ADDRESS>
+Copyright © 2020 Peter W. Smith <peter.w.smith16@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,8 +36,7 @@ func MessageDef() {
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Base command for adding entries to the bibliography",
-	Long: `The add command can be combined with a subcommand specifying the type of entry to be added to the bibliography.
-    When used on its own, it will display a landing page allowing you to further navigate to the appropriate entry.`,
+	Long:  `The add command can be combined with a subcommand specifying the type of entry to be added to the bibliography.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
 		fmt.Println("####### This is the landing page for add #######")

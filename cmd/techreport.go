@@ -1,5 +1,5 @@
 /*
-Copyright © 2020 NAME HERE <EMAIL ADDRESS>
+Copyright © 2020 Peter W. Smith <peter.w.smith16@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	bibinfo "lightref/bibentries"
 
 	"github.com/spf13/cobra"
@@ -38,7 +37,6 @@ var techreportCmd = &cobra.Command{
     - month
     - note `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("techreport called")
 		bibinfo.AddTechReport()
 	},
 }

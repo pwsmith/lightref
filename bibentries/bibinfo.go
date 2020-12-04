@@ -584,6 +584,7 @@ func AddMAThesis() {
 	}
 	defer bibliography.Close()
 	smf := new(Mathesis)
+	smf.Citekey = GenInfo("Citekey")
 	smf.Author = GenInfo("Author")
 	smf.Title = GenInfo("Title")
 	smf.School = GenInfo("School")

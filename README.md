@@ -5,39 +5,15 @@ It is designed as a command line based alternative to the GUI bibliograph manage
 Lightref is **not** intended as a serious competitor to these: they are wonderful programs with vastly more options than Lightref offers.
 However, for a simple task such as adding an entry to a bibtex file, opening a full GUI is often overkill, hence Lightref.
 
-# Current Satus (November 2020)
-
-Lightref is very much under development, and as such should not be considered a finished product.
-Currently it offers the ability to:
-
-- [X] add article entries
-- [X] add book entries
-- [X] add booklet entries
-- [ ] add conference entries
-- [X] add inbook entries
-- [X] add incollection entries
-- [X] add inproceedings entries
-- [X] add manual entries
-- [X] add mastersthesis entries
-- [X] add misc entries
-- [X] add phdthesis entries
-- [X] add proceedings entries
-- [X] add techreport entries
-- [X] add unpublished entries
-
-The remaining classes will be added in the following weeks.
-
-- [X] Provide functionality to print the bibliography in shortened form to output
-- [ ] Allow for a long listing of the bibliography
-
-
 # Installation
 
 Lightref is written in Go using [Cobra](https://github.com/spf13/cobra).
-Since it is still under development there is currently no binary for download.
-This will be made available when ready.
+Precompiled binaries for Linux, Mac and Windows are available.
+Note that the windows binary is **not** tested, as I don't have a windows system at hand to test it on. 
+It should work as I don't think there's anything platform specific to cause a problem, but I can't say for sure.
+Simply download the binaries, place them in your $PATH, and everything should work.
 
-It is possible to build from source.
+Alternatively, you can build from the source code.
 You must have [Go](https://golang.org), installed following the instructions [here](https://golang.org/dl/).
 You should then install Cobra following instructions [here](https://github.com/spf13/cobra#installing).
 Then, fork the Lightref repo and run:
@@ -59,7 +35,7 @@ The only relevant field at this point is the bibliography value, which you shoul
 bibliography: "/path/to/bibliography/file/on/system"
 ```
 
-Note that this is optional, and the bibliography can be set at the command using the `-b`/`--bibliography` flag as detailed below.
+Note that this is **optional**, and the bibliography can be set at the command using the `-b`/`--bibliography` flag as detailed below.
 
 ## Main Commands
 
@@ -70,25 +46,25 @@ lightref add ENTRY_TYPE
 ```
 
 To add an entry to the bibliography, use the `add` command followed by the relevant bibtex entry type.
-For instance:
+Thus, the following are all add commands:
 
 ```bash
 lightref add article ## to add an article
-lightref add inbook ## to add a book chapter
+lightref add book ## add a book entry
+lightref add booklet ## add a booklet entry
+lightref add inbook ## to add an inbook entry
+lightref add incollection ## add an incollection entry
+lightref add inproceedings ## add an inproceedings entry
+lightref add manual ## add a manual entry
+lightref add mastersthesis ## add a mastersthesis entry
+lightref add misc ## add a misc entry
+lightref add phdthesis ## add a phdthesis entry
+lightref add proceedings ## add a proceedings entry
+lightref add techreport ## add a techreport entry
+lightref add unpublished ## add an unpublished entry
 ```
 
 You will then be prompted to add in the information for the fields that are relevant for that type.
-For example, if you run `lightref add article`, you will be prompted for:
-
-- citekey
-- author
-- title
-- year
-- journal
-- volume
-- number
-- pages
-
 Lightref does **not** enforce the filling out of any fields, so any of them can be left blank if you wish.
 Bibtex does have a concept of obligatory fields that should be filled out for each type, however, and will warn the user at run time if they are not entered.
 
@@ -99,13 +75,19 @@ lightref print
 ```
 
 Provides a short summary of each entry in the file, containing the (highlighted) citekey, the Author and the Title.
+`Print` can be combined with two flags:
 
+- `-l`/`--long` to show the long output of all entries, with symbols like `{}"` removed.
+-  `-r`/`--raw` to show exactly what is in the bibliography file, i.e. no formatting.
+
+**Tip**: The `print` command is best used in conjunction with a paginator such as `less`, combined with the search function.
 
 ## Global Flags
 
-`-b /path/to/biblio` | `--bibliography /path/to/biblio`: allows the user to specify an alternative bibliography to the default in the `lightref.yaml` file.
+`-b`/`--bibliography /path/to/biblio`: allows the user to specify an alternative bibliography to the default in the `lightref.yaml` file.
 
-# Features to be added 
+# Features to be added in future releases
 
 - search bibliography and display results to terminal
 - citekey checking to avoid duplication: currently there exists nothing to stop you using duplicate citekeys in your bibliography, which is not ideal
+- the ability to input data into `yaml` and `json` format.
