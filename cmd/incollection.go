@@ -24,13 +24,24 @@ import (
 // incollectionCmd represents the incollection command
 var incollectionCmd = &cobra.Command{
 	Use:   "incollection",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds an incollection entry to the bibliography",
+	Long: `The incollection command asks for the following information:
+    - author
+    - title
+    - booktitle
+    - publisher
+    - year 
+    - editor
+    - volume
+    - number
+    - series 
+    - type 
+    - chapter 
+    - pages
+    - address
+    - edition 
+    - month
+    - note`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("incollection called")
 	},

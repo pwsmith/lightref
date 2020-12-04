@@ -31,21 +31,18 @@ import (
 // printCmd represents the print command
 var printCmd = &cobra.Command{
 	Use:   "print",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Displays the bibliography in the terminal window.",
+	Long:  `Print displays the bibliography in the terminal window. In its default use, it will display a short overview of each entry, with a highlighted citekey, the title of the entry, the author of the entry, and the year of publication. This option is useful for quick reference of the bibliography, particularly when combined with the pagination tool of your operating system, such as 'less'.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("print called")
+		raw_value, _ := cmd.Flags().GetBool("raw")
+		tstatus, _ := cmd.Flags().GetBool("long")
 		readFile, err := os.Open(viper.GetString("bibliography"))
 		if err != nil {
 			log.Fatalf("failed to open file: %s", err)
 		}
 
-		d := color.New(color.FgGreen, color.Bold)
+		show_green := color.New(color.FgGreen, color.Bold)
 		fileScanner := bufio.NewScanner(readFile)
 		fileScanner.Split(bufio.ScanLines)
 		var fileTextLines []string
@@ -54,18 +51,40 @@ to quickly create a Cobra application.`,
 			fileTextLines = append(fileTextLines, fileScanner.Text())
 		}
 
-		readFile.Close()
-
-		for _, eachline := range fileTextLines {
-			if strings.Contains(eachline, "Title") || strings.Contains(eachline, "Year") || strings.Contains(eachline, "Author") || strings.Contains(eachline, "@") {
+		defer readFile.Close()
+		if raw_value {
+			for _, eachline := range fileTextLines {
+				fmt.Println(eachline)
+			}
+		} else if tstatus {
+			for _, eachline := range fileTextLines {
 				//eachline = strings.Replace(eachline, "@article", "citekey = ", -1)
 				eachline = bibinfo.RemoveType(eachline)
 				eachline = strings.Replace(eachline, "{", "", -1)
 				eachline = strings.Replace(eachline, "}", "", -1)
+				eachline = strings.Replace(eachline, " =", ":", -1)
+				eachline = strings.TrimSuffix(eachline, ",")
 				if strings.Contains(eachline, "Citekey") {
-					d.Printf("\n" + eachline + "\n")
+					show_green.Printf("\n" + eachline + "\n")
 				} else {
 					fmt.Println(eachline)
+				}
+
+			}
+		} else {
+			for _, eachline := range fileTextLines {
+				if strings.Contains(eachline, "Title") || strings.Contains(eachline, "title") || strings.Contains(eachline, "Year") || strings.Contains(eachline, "Year") || strings.Contains(eachline, "Author") || strings.Contains(eachline, "author") || strings.Contains(eachline, "@") {
+					//eachline = strings.Replace(eachline, "@article", "citekey = ", -1)
+					eachline = bibinfo.RemoveType(eachline)
+					eachline = strings.Replace(eachline, "{", "", -1)
+					eachline = strings.Replace(eachline, "}", "", -1)
+					eachline = strings.Replace(eachline, " =", ":", -1)
+					eachline = strings.TrimSuffix(eachline, ",")
+					if strings.Contains(eachline, "Citekey") {
+						show_green.Printf("\n" + eachline + "\n")
+					} else {
+						fmt.Println(eachline)
+					}
 				}
 			}
 		}
@@ -84,4 +103,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// printCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	printCmd.Flags().BoolP("long", "l", false, "Show the bibliography in longer, but formatted form")
+	printCmd.Flags().BoolP("raw", "r", false, "Show the bibliography in raw, unedited form")
 }

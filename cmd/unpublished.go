@@ -25,13 +25,14 @@ import (
 // unpublishedCmd represents the unpublished command
 var unpublishedCmd = &cobra.Command{
 	Use:   "unpublished",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds an unpublished entry to the bibliography",
+	Long: `The unpublished command asks for the following fields:
+    - citekey
+    - author
+    - title
+    - note
+    - month
+    - year`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("unpublished called")
 		bibinfo.AddUnpublished()

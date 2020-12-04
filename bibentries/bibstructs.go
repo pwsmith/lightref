@@ -27,10 +27,12 @@ type Unpublished struct {
 type Book struct {
 	Citekey   string
 	Author    string
+	Editor    string
 	Title     string
 	Publisher string
 	Year      string
 	Volume    string
+	Number    string
 	Series    string
 	Address   string
 	Edition   string
@@ -156,6 +158,7 @@ type Proceedings struct {
 	Year         string
 	Editor       string
 	Volume       string
+	Number       string
 	Address      string
 	Month        string
 	Organization string

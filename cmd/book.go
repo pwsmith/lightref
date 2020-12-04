@@ -25,13 +25,21 @@ import (
 // bookCmd represents the book command
 var bookCmd = &cobra.Command{
 	Use:   "book",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds a book entry to the bibliography",
+	Long: `The book command asks for the following entries:
+    - citekey
+    - author
+    - editor
+    - title
+    - publisher
+    - year
+    - volume
+    - number
+    - series
+    - address
+    - edition
+    - month
+    - note`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("book called")
 		bibinfo.AddBook()

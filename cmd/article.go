@@ -18,28 +18,27 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	//	"github.com/spf13/viper"
 	bibinfo "lightref/bibentries"
 )
 
 // articleCmd represents the article command
 var articleCmd = &cobra.Command{
 	Use:   "article",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds an article entry to the bibliography",
+	Long: `Article asks for the following fields:
+    - citekey
+    - author
+    - title
+    - journal 
+    - year
+    - volume 
+    - number 
+    - pages 
+    - month 
+    - note `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("article called")
-		bib, _ := addCmd.Flags().GetString("bibliography")
-		if bib != "" {
-			fmt.Println("Bibliography =", bib)
-			viper.Set("bibliography", bib)
-		}
-		fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
+		fmt.Println("####### Add new ARTICLE entry #######")
 		bibinfo.Add_ArticleS()
 	},
 }

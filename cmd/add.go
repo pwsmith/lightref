@@ -18,7 +18,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	//	"github.com/spf13/viper"
 	//	"github.com/spf13/viper"
 	//	"io/ioutil"
 	//	"log"
@@ -35,13 +35,9 @@ func MessageDef() {
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Base command for adding entries to the bibliography",
+	Long: `The add command can be combined with a subcommand specifying the type of entry to be added to the bibliography.
+    When used on its own, it will display a landing page allowing you to further navigate to the appropriate entry.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
 		fmt.Println("####### This is the landing page for add #######")
@@ -53,19 +49,13 @@ to quickly create a Cobra application.`,
 		//	}
 		//	fmt.Println(string(data))
 
-		tstatus, _ := cmd.Flags().GetBool("toggle")
-		if tstatus {
-			Message()
-		} else {
-			MessageDef()
-		}
-		fmt.Println(cmd.Flags().GetString("bibliography"))
-		bib, _ := cmd.Flags().GetString("bibliography")
-		if bib != "" {
-			fmt.Println("Bibliography =", bib)
-			viper.Set("bibliography", bib)
-		}
-		fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
+		//	fmt.Println(cmd.Flags().GetString("bibliography"))
+		//	bib, _ := cmd.Flags().GetString("bibliography")
+		//	if bib != "" {
+		//		fmt.Println("Specified bibliography =", bib)
+		//		viper.Set("bibliography", bib)
+		//	}
+		//	fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
 	},
 }
 
@@ -80,5 +70,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	//addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

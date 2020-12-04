@@ -17,7 +17,26 @@ import (
 //	}
 //	fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
 //}
+
+func BibliographyCheck() {
+	selected_bibliography := viper.GetString("bibliography")
+	if _, err := os.Stat(selected_bibliography); os.IsNotExist(err) {
+		fmt.Printf("Selected bibliography does not exist, creating %s\n", selected_bibliography)
+		os.Create(selected_bibliography)
+	} else {
+		fmt.Printf("Found %s\n", selected_bibliography)
+	}
+}
+
 func Add_ArticleS() {
+	//	selected_bibliography := viper.GetString("bibliography")
+	//	if _, err := os.Stat(selected_bibliography); os.IsNotExist(err) {
+	//		fmt.Printf("Selected bibliography does not exist, creating %s\n", selected_bibliography)
+	//		os.Create(selected_bibliography)
+	//	} else {
+	//		fmt.Printf("Found %s\n", selected_bibliography)
+	//	}
+	BibliographyCheck()
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
@@ -85,6 +104,7 @@ func CloseTag() string {
 }
 
 func AddBook() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new BOOK entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -96,10 +116,12 @@ func AddBook() {
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
+	smf.Editor = GenInfo("editor")
 	smf.Title = GenInfo("title")
 	smf.Year = GenInfo("year")
 	smf.Publisher = GenInfo("publisher")
 	smf.Volume = GenInfo("volume")
+	smf.Number = GenInfo("number")
 	smf.Series = GenInfo("series")
 	smf.Address = GenInfo("address")
 	smf.Edition = GenInfo("edition")
@@ -112,6 +134,9 @@ func AddBook() {
 	if smf.Author != "" {
 		bibliography.WriteString(WriteData("Author", smf.Author))
 	}
+	if smf.Editor != "" {
+		bibliography.WriteString(WriteData("Editor", smf.Editor))
+	}
 	if smf.Title != "" {
 		bibliography.WriteString(WriteData("Title", smf.Title))
 	}
@@ -120,6 +145,9 @@ func AddBook() {
 	}
 	if smf.Volume != "" {
 		bibliography.WriteString(WriteData("Volume", smf.Volume))
+	}
+	if smf.Number != "" {
+		bibliography.WriteString(WriteData("Number", smf.Number))
 	}
 	if smf.Publisher != "" {
 		bibliography.WriteString(WriteData("Publisher", smf.Publisher))
@@ -143,6 +171,7 @@ func AddBook() {
 }
 
 func AddPhdThesis() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new PhD THESIS entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -193,6 +222,7 @@ func AddPhdThesis() {
 }
 
 func AddInBook() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new InBOOK entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -255,6 +285,7 @@ func AddInBook() {
 }
 
 func AddBooklet() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new BOOKLET entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -301,6 +332,7 @@ func AddBooklet() {
 }
 
 func AddUnpublished() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new UNPUBLISHED entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -339,6 +371,7 @@ func AddUnpublished() {
 }
 
 func AddInCollection() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new INCOLLECTION entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -417,6 +450,7 @@ func AddInCollection() {
 }
 
 func AddInProceedings() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new INPROCEEDINGS entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -491,6 +525,7 @@ func AddInProceedings() {
 }
 
 func AddManual() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new MANUAL entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -540,6 +575,7 @@ func AddManual() {
 }
 
 func AddMAThesis() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new MA THESIS entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -557,7 +593,7 @@ func AddMAThesis() {
 	smf.Month = GenInfo("Month")
 	smf.Note = GenInfo("Note")
 	// writes the information to file
-	bibliography.WriteString("\n@manual{")
+	bibliography.WriteString("\n@mastersthesis{")
 	bibliography.WriteString(smf.Citekey)
 	bibliography.WriteString(",\n")
 	if smf.Author != "" {
@@ -588,6 +624,7 @@ func AddMAThesis() {
 }
 
 func Add_Misc() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new MISC entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -629,6 +666,7 @@ func Add_Misc() {
 }
 
 func AddProceedings() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new PROCEEDINGS entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -644,6 +682,7 @@ func AddProceedings() {
 	smf.Year = GenInfo("Year")
 	smf.Editor = GenInfo("Editor")
 	smf.Volume = GenInfo("Volume")
+	smf.Number = GenInfo("Number")
 	smf.Address = GenInfo("Address")
 	smf.Month = GenInfo("Month")
 	smf.Organization = GenInfo("Organization")
@@ -665,6 +704,9 @@ func AddProceedings() {
 	if smf.Volume != "" {
 		bibliography.WriteString(WriteData("Volume", smf.Volume))
 	}
+	if smf.Number != "" {
+		bibliography.WriteString(WriteData("Number", smf.Number))
+	}
 	if smf.Address != "" {
 		bibliography.WriteString(WriteData("Address", smf.Address))
 	}
@@ -684,6 +726,7 @@ func AddProceedings() {
 }
 
 func AddTechReport() {
+	BibliographyCheck()
 	fmt.Println("####### Enter new TECH REPORT entry #######")
 	//Open bibliography//
 	bibliography, err := os.OpenFile(viper.GetString("bibliography"), os.O_APPEND|os.O_WRONLY, 0644)
@@ -743,12 +786,28 @@ func RemoveType(x string) string {
 		Removed = strings.Replace(x, "@article", "Citekey = ", -1)
 	} else if strings.Contains(x, "@book") {
 		Removed = strings.Replace(x, "@book", "Citekey = ", -1)
+	} else if strings.Contains(x, "@conference") {
+		Removed = strings.Replace(x, "@conference", "Citekey = ", -1)
+	} else if strings.Contains(x, "@inbook") {
+		Removed = strings.Replace(x, "@inbook", "Citekey = ", -1)
+	} else if strings.Contains(x, "@incollection") {
+		Removed = strings.Replace(x, "@incollection", "Citekey = ", -1)
+	} else if strings.Contains(x, "@inproceedings") {
+		Removed = strings.Replace(x, "@inproceedings", "Citekey = ", -1)
 	} else if strings.Contains(x, "@phdthesis") {
 		Removed = strings.Replace(x, "@phdthesis", "Citekey = ", -1)
 	} else if strings.Contains(x, "@misc") {
 		Removed = strings.Replace(x, "@misc", "Citekey = ", -1)
 	} else if strings.Contains(x, "@unpublished") {
 		Removed = strings.Replace(x, "@unpublished", "Citekey = ", -1)
+	} else if strings.Contains(x, "@proceedings") {
+		Removed = strings.Replace(x, "@proceedings", "Citekey = ", -1)
+	} else if strings.Contains(x, "@manual") {
+		Removed = strings.Replace(x, "@manual", "Citekey = ", -1)
+	} else if strings.Contains(x, "@techreport") {
+		Removed = strings.Replace(x, "@techreport", "Citekey = ", -1)
+	} else if strings.Contains(x, "@mastersthesis") {
+		Removed = strings.Replace(x, "@mastersthesis", "Citekey = ", -1)
 	} else {
 		Removed = x
 	}

@@ -25,13 +25,17 @@ import (
 // manualCmd represents the manual command
 var manualCmd = &cobra.Command{
 	Use:   "manual",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds a manual entry to the bibliography",
+	Long: `The manual command asks for the following fields:
+    - citekey
+    - title
+    - author
+    - organization
+    - address
+    - edition
+    - month
+    - year 
+    - note`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("manual called")
 		bibinfo.AddManual()

@@ -24,14 +24,18 @@ import (
 
 // mathesisCmd represents the mathesis command
 var mathesisCmd = &cobra.Command{
-	Use:   "mathesis",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "mastersthesis",
+	Short: "Adds a mastersthesis entry to the bibliography",
+	Long: `The mastersthesis command asks for the following fields:
+    - citekey
+    - author
+    - title
+    - school
+    - year
+    - type
+    - address
+    - month
+    - note`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("mathesis called")
 		bibinfo.AddMAThesis()

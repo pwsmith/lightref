@@ -25,13 +25,15 @@ import (
 // miscCmd represents the misc command
 var miscCmd = &cobra.Command{
 	Use:   "misc",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds a misc entry to the bibliography",
+	Long: `
+    - citekey
+    - author
+    - title
+    - howpublished
+    - month
+    - year
+    - note`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("misc called")
 		bibinfo.Add_Misc()

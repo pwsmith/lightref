@@ -24,13 +24,23 @@ import (
 // inbookCmd represents the inbook command
 var inbookCmd = &cobra.Command{
 	Use:   "inbook",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Adds an inbook entry to the bibliography.",
+	Long: `The inbook command asks for the following fields:
+    - author
+    - editor
+    - title
+    - chapter
+    - pages
+    - publisher
+    - year
+    - volume
+    - number
+    - series
+    - type
+    - address
+    - edition
+    - month
+    - note`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("inbook called")
 	},

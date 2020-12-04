@@ -58,7 +58,6 @@ func init() {
 
 	var Bib string
 	rootCmd.PersistentFlags().StringVarP(&Bib, "bibliography", "b", "", "specify an alternate bibliography")
-	fmt.Println("Bib =", Bib)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.lightref)")
 	//	rootCmd.PersistentFlags().BoolP("bibliography", "b", false, "Specify a different bibiography from the default")
@@ -73,7 +72,7 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 		fmt.Println(cfgFile)
-		fmt.Println("Config found")
+		//		fmt.Println("Config found")
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
@@ -85,7 +84,7 @@ func initConfig() {
 		// Search config in home directory with name ".lightref" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".lightref")
-		fmt.Println("Config found")
+		//		fmt.Println("Config found")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
@@ -93,14 +92,13 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
-		message := viper.Get("message")
-		fmt.Println(message)
 		bib, _ := rootCmd.Flags().GetString("bibliography")
 		if bib != "" {
-			fmt.Println("Bibliography =", bib)
+			fmt.Println("Using the specified bibliography:", bib)
 			viper.Set("bibliography", bib)
+		} else {
+			fmt.Println("Using the default bibliography")
 		}
-		fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
 	}
 
 }
