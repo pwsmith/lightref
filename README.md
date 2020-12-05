@@ -13,19 +13,24 @@ Note that the windows binary is **not** tested, as I don't have a windows system
 It should work as I don't think there's anything platform specific to cause a problem, but I can't say for sure.
 Simply download the relevant binary, make it executable, and place it in your $PATH.
 
-## Linux
+## Linux/Mac
 
 ```bash
-$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.0/lightref-v0.1.0-linux ## to download the binary, or just use the link above
+## to download the binary, or just use the link above
+$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.0/lightref-v0.1.0-linux #for linux 
+$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.0/lightref-v0.1.0-mac #for mac
 
-$ mv lightref-v0.1.0-linux lightref ## to make the command shorter
+## to make the command shorter
+$ mv lightref-v0.1.0-linux lightref 
 
-$ chmod u+x lightref ## to make the binary exectuable
+## to make the binary exectuable
+$ chmod u+x lightref
 
-$ sudo mv lightref /usr/local/bin ## or place it wherever you want
+## or place it wherever you want
+$ sudo mv lightref /usr/local/bin 
 
-$ echo 'export PATH='$PATH:/usr/local/bin' >> ~/.bashrc' ## if /usr/local/bin isn't already on your $PATH
-
+## if /usr/local/bin isn't already on your $PATH
+$ echo 'export PATH='$PATH:/usr/local/bin' >> ~/.bashrc' 
 ```
 
 Alternatively, you can build from the source code.
