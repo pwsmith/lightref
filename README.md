@@ -7,11 +7,26 @@ However, for a simple task such as adding an entry to a bibtex file, opening a f
 
 # Installation
 
-Lightref is written in Go using [Cobra](https://github.com/spf13/cobra).
-Precompiled binaries for Linux, Mac and Windows are available.
+Lightref is written in Go using [Cobra](https://github.com/spf13/cobra) and so is a cross-platform utility.
+Precompiled binaries for Linux, Mac and Windows are available on the [releases page](https://github.com/pwsmith/lightref/releases).
 Note that the windows binary is **not** tested, as I don't have a windows system at hand to test it on. 
 It should work as I don't think there's anything platform specific to cause a problem, but I can't say for sure.
-Simply download the binaries, place them in your $PATH, and everything should work.
+Simply download the relevant binary, make it executable, and place it in your $PATH.
+
+## Linux
+
+```bash
+$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.0/lightref-v0.1.0-linux ## to download the binary, or just use the link above
+
+$ mv lightref-v0.1.0-linux lightref ## to make the command shorter
+
+$ chmod u+x lightref ## to make the binary exectuable
+
+$ sudo mv lightref /usr/local/bin ## or place it wherever you want
+
+$ echo 'export PATH='$PATH:/usr/local/bin' >> ~/.bashrc' ## if /usr/local/bin isn't already on your $PATH
+
+```
 
 Alternatively, you can build from the source code.
 You must have [Go](https://golang.org), installed following the instructions [here](https://golang.org/dl/).
