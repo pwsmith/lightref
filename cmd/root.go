@@ -28,13 +28,44 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "lightref",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "",
+	Long: `
+Lightref is a small, cross platform CLI for adding entries to a bibtex bibliography.
+It is designed as a command line based alternative to the GUI bibliograph management alternatives such as Jabref and Bibdesk.
+Lightref is **not** intended as a serious competitor to these: they are wonderful programs with vastly more options than Lightref offers.
+However, for a simple task such as adding an entry to a bibtex file, opening a full GUI is often overkill, hence Lightref.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Usage:
+
+lightref add <ENTRYTYPE> : add the relevant entry to the bibliography:
+
+    lightref add article ## to add an article
+    lightref add book ## add a book entry
+    lightref add booklet ## add a booklet entry
+    lightref add inbook ## to add an inbook entry
+    lightref add incollection ## add an incollection entry
+    lightref add inproceedings ## add an inproceedings entry
+    lightref add manual ## add a manual entry
+    lightref add mastersthesis ## add a mastersthesis entry
+    lightref add misc ## add a misc entry
+    lightref add phdthesis ## add a phdthesis entry
+    lightref add proceedings ## add a proceedings entry
+    lightref add techreport ## add a techreport entry
+    lightref add unpublished ## add an unpublished entry
+
+lightref print : view a printout of the bibliography
+
+    lightref print
+    lightref print -l/--long
+    lightref -r/--raw
+
+Configuration:
+
+A default bibliography can be specified in the configuration file, by default $/.lightref.yaml. You can also specify a bibliography per command using the -b/--bibliography 
+
+For full instructions, see https://github.com/pwsmith/lightref.
+
+`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {

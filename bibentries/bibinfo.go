@@ -236,6 +236,7 @@ func AddInBook() {
 	smf.Author = GenInfo("author")
 	smf.Title = GenInfo("title")
 	smf.Year = GenInfo("year")
+	smf.Booktitle = GenInfo("booktitle")
 	smf.Publisher = GenInfo("publisher")
 	smf.Volume = GenInfo("volume")
 	smf.Series = GenInfo("series")
@@ -256,6 +257,9 @@ func AddInBook() {
 	}
 	if smf.Year != "" {
 		bibliography.WriteString(WriteData("Year", smf.Year))
+	}
+	if smf.Booktitle != "" {
+		bibliography.WriteString(WriteData("Booktitle", smf.Booktitle))
 	}
 	if smf.Publisher != "" {
 		bibliography.WriteString(WriteData("Publisher", smf.Publisher))

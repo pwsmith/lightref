@@ -68,6 +68,7 @@ type InBook struct {
 	Edition   string
 	Month     string
 	Note      string
+	Booktitle string
 }
 
 type Booklet struct {
