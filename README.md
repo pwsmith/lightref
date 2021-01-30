@@ -106,6 +106,13 @@ Provides a short summary of each entry in the file, containing the (highlighted)
 
 `-b`/`--bibliography /path/to/biblio`: allows the user to specify an alternative bibliography to the default in the `lightref.yaml` file.
 
+# Changelog
+
+## 0.1.1
+
+- Added 'booktitle' field to `inbook` entry.
+- Added in the `--help` flag information for the root command.
+
 # Features to be added in future releases
 
 - search bibliography and display results to terminal
