@@ -17,11 +17,11 @@ Simply download the relevant binary, make it executable, and place it in your $P
 
 ```bash
 ## to download the binary, or just use the link above
-$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.0/lightref-v0.1.0-linux #for linux 
-$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.0/lightref-v0.1.0-mac #for mac
+$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.1/lightref-v0.1.1-linux #for linux 
+$ wget https://github.com/pwsmith/lightref/releases/download/v0.1.1/lightref-v0.1.1-mac #for mac
 
 ## to make the command shorter
-$ mv lightref-v0.1.0-linux lightref 
+$ mv lightref-v0.1.1-linux lightref 
 
 ## to make the binary exectuable
 $ chmod u+x lightref

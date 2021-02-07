@@ -18,6 +18,31 @@ import (
 //	fmt.Println("File chosen by viper is", viper.GetString("bibliography"))
 //}
 
+type Bibentry struct {
+	Address      string
+	Author       string
+	Booktitle    string
+	Chapter      string
+	Citekey      string
+	Edition      string
+	Editor       string
+	Howpublished string
+	Institution  string
+	Journal      string
+	Month        string
+	Note         string
+	Number       string
+	Organization string
+	Pages        string
+	Publisher    string
+	School       string
+	Series       string
+	Title        string
+	Typ          string
+	Volume       string
+	Year         string
+}
+
 func BibliographyCheck() {
 	selected_bibliography := viper.GetString("bibliography")
 	if _, err := os.Stat(selected_bibliography); os.IsNotExist(err) {
@@ -42,7 +67,7 @@ func Add_ArticleS() {
 		log.Println(err)
 	}
 
-	smf := new(Article)
+	smf := new(Bibentry)
 
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -112,7 +137,7 @@ func AddBook() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Book)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -179,7 +204,7 @@ func AddPhdThesis() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(PhDThesis)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -230,7 +255,7 @@ func AddInBook() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(InBook)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -297,7 +322,7 @@ func AddBooklet() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Booklet)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -344,7 +369,7 @@ func AddUnpublished() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Unpublished)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -383,7 +408,7 @@ func AddInCollection() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(InCollection)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -462,7 +487,7 @@ func AddInProceedings() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(InProceedings)
+	smf := new(Bibentry)
 	//Gathers all the information//
 	smf.Citekey = GenInfo("citekey")
 	smf.Author = GenInfo("author")
@@ -537,7 +562,7 @@ func AddManual() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Manual)
+	smf := new(Bibentry)
 	smf.Citekey = GenInfo("Citekey")
 	smf.Title = GenInfo("Title")
 	smf.Author = GenInfo("Author")
@@ -587,7 +612,7 @@ func AddMAThesis() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Mathesis)
+	smf := new(Bibentry)
 	smf.Citekey = GenInfo("Citekey")
 	smf.Author = GenInfo("Author")
 	smf.Title = GenInfo("Title")
@@ -637,7 +662,7 @@ func Add_Misc() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Misc)
+	smf := new(Bibentry)
 	smf.Citekey = GenInfo("Citekey")
 	smf.Author = GenInfo("Author")
 	smf.Title = GenInfo("Title")
@@ -679,7 +704,7 @@ func AddProceedings() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Proceedings)
+	smf := new(Bibentry)
 	// writes the information to file
 
 	smf.Citekey = GenInfo("Citekey")
@@ -739,7 +764,7 @@ func AddTechReport() {
 		log.Println(err)
 	}
 	defer bibliography.Close()
-	smf := new(Techreport)
+	smf := new(Bibentry)
 	smf.Citekey = GenInfo("Citekey")
 	smf.Author = GenInfo("Author")
 	smf.Title = GenInfo("Title")
